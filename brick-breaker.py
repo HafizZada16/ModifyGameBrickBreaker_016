@@ -90,7 +90,7 @@ class Paddle(GameObject):
 
 
 class Brick(GameObject):
-    COLORS = {1: '#F95454', 2: '#0D92F4', 3: '#00FF9C'}
+    COLORS = {1: '#F95454', 2: '#0D92F4', 3: '#00FF9C', 4: '#117554'}
 
     def __init__(self, canvas, x, y, hits):
         self.width = 75
@@ -152,7 +152,7 @@ class Game(tk.Frame):
         self.items[self.paddle.item] = self.paddle
         # adding brick with different hit capacities - 3,2 and 1
         for x in range(5, self.width - 5, 75):
-            self.add_brick(x + 37.5, 50, 3)
+            self.add_brick(x + 37.5, 50, 4)
             self.add_brick(x + 37.5, 70, 3)
             self.add_brick(x + 37.5, 90, 2)
             self.add_brick(x + 37.5, 110, 1)
