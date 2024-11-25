@@ -165,6 +165,7 @@ class Game(tk.Frame):
                          lambda _: self.paddle.move(-10))
         self.canvas.bind('<Right>',
                          lambda _: self.paddle.move(10))
+        self.canvas.bind('<Motion>', self.move_paddle_with_mouse)  # Mengikat gerakan mouse
 
     def setup_game(self):
         self.add_ball()
@@ -238,6 +239,13 @@ class Game(tk.Frame):
         objects = [self.items[x] for x in items if x in self.items]
         self.ball.collide(objects)
 
+    def move_paddle_with_mouse(self, event):
+        # Menggerakkan paddle berdasarkan posisi mouse
+        paddle_coords = self.paddle.get_position()
+        new_x = event.x
+        width = self.canvas.winfo_width()
+        if new_x >= self.paddle.width / 2 and new_x <= width - self.paddle.width / 2:
+            self.paddle.move(new_x - paddle_coords[0] - self.paddle.width / 2)
 
 
 if __name__ == '__main__':
