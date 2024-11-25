@@ -167,11 +167,22 @@ class Game(tk.Frame):
                          lambda _: self.paddle.move(10))
 
     def setup_game(self):
-           self.add_ball()
-           self.update_lives_text()
-           self.text = self.draw_text(300, 200,
-                                      'Press Space to start')
-           self.canvas.bind('<space>', lambda _: self.start_game())
+        self.add_ball()
+        self.update_lives_text()
+        self.text = self.draw_text(300, 200, 'Press Space to start')
+        self.canvas.bind('<space>', lambda _: self.start_game())
+        self.draw_spikes()
+
+    def draw_spikes(self):
+        spike_height = 20  # Tinggi jarum
+        spike_width = 10   # Lebar jarum
+        for x in range(0, self.width, 15):  # Menggambar jarum setiap 30 piksel
+            self.canvas.create_polygon(
+                x, self.height - 20,  # Mengangkat jarum lebih tinggi dari dasar
+                x - spike_width, self.height + spike_height - 10,  # Mengubah posisi y untuk jarum
+                x + spike_width, self.height + spike_height - 10,  # Mengubah posisi y untuk jarum
+                fill='black', outline='black'
+            )
 
     def add_ball(self):
         if self.ball is not None:
