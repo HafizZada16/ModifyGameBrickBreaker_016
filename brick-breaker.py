@@ -211,6 +211,7 @@ class Game(tk.Frame):
             self.draw_text(300, 200, 'You win! You the Breaker of Bricks.')
         elif self.ball.get_position()[3] >= self.height: 
             self.ball.speed = None
+            self.ball.canvas.itemconfig(self.ball.item, fill='red')  # Mengubah warna bola menjadi merah
             self.lives -= 1
             if self.lives < 0:
                 self.draw_text(300, 200, 'You Lose! Game Over!')
