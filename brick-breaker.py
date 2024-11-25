@@ -24,7 +24,7 @@ class Ball(GameObject):
         self.radius = 10
         self.direction = [1, -1]
         # increase the below value to increase the speed of ball
-        self.speed = 5
+        self.speed = 10
         item = canvas.create_oval(x-self.radius, y-self.radius,
                                   x+self.radius, y+self.radius,
                                   fill='white')
