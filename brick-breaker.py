@@ -178,7 +178,7 @@ class Game(tk.Frame):
         spike_width = 10   # Lebar jarum
         for x in range(0, self.width, 15):  # Menggambar jarum setiap 30 piksel
             self.canvas.create_polygon(
-                x, self.height - 20,  # Mengangkat jarum lebih tinggi dari dasar
+                x, self.height - 15,  # Mengangkat jarum lebih tinggi dari dasar
                 x - spike_width, self.height + spike_height - 10,  # Mengubah posisi y untuk jarum
                 x + spike_width, self.height + spike_height - 10,  # Mengubah posisi y untuk jarum
                 fill='black', outline='black'
