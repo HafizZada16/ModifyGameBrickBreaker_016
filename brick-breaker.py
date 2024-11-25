@@ -1,6 +1,5 @@
 import tkinter as tk
 import random
-import json
 
 
 class GameObject(object):
