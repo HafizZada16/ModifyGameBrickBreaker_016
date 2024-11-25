@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+import json
 
 
 class GameObject(object):
@@ -18,7 +19,8 @@ class GameObject(object):
 
 
 class Ball(GameObject):
-    def __init__(self, canvas, x, y):
+    def __init__(self, canvas, x, y, game):
+        self.game = game
         self.radius = 10
         self.direction = [1, -1]
         # increase the below value to increase the speed of ball
@@ -48,6 +50,7 @@ class Ball(GameObject):
             if isinstance(game_object, Brick):
                 hit_brick = True  # Menandai bahwa bola mengenai brick
                 game_object.hit()  # Menghantam brick
+                self.game.update_score(10)  # Memanggil metode update_score dari Game
 
         if hit_brick:
             self.direction[1] *= -1  # Membalik arah vertikal jika mengenai brick
@@ -141,6 +144,7 @@ class Game(tk.Frame):
         self.lives = 3
         self.width = 610
         self.height = 400
+        self.score = 0
         self.canvas = tk.Canvas(self, bg='#C9E6F0',
                                 width=self.width,
                                 height=self.height,)
@@ -159,6 +163,7 @@ class Game(tk.Frame):
             self.add_brick(x + 37.5, 110, 1)
 
         self.hud = None
+        self.score_text = self.draw_text(self.width - 50, 20, 'Score: 0', 15)  # Menampilkan skor di pojok kanan atas
         self.setup_game()
         self.canvas.focus_set()
         self.canvas.bind('<Left>',
@@ -190,7 +195,7 @@ class Game(tk.Frame):
             self.ball.delete()
         paddle_coords = self.paddle.get_position()
         x = (paddle_coords[0] + paddle_coords[2]) * 0.5
-        self.ball = Ball(self.canvas,x, 310)
+        self.ball = Ball(self.canvas,x, 310, self)
         self.paddle.set_ball(self.ball)
 
     def add_brick(self, x, y, hits):
@@ -246,6 +251,10 @@ class Game(tk.Frame):
         width = self.canvas.winfo_width()
         if new_x >= self.paddle.width / 2 and new_x <= width - self.paddle.width / 2:
             self.paddle.move(new_x - paddle_coords[0] - self.paddle.width / 2)
+
+    def update_score(self, points):
+        self.score += points
+        self.canvas.itemconfig(self.score_text, text='Score: %s' % self.score)  # Memperbarui teks skor
 
 
 if __name__ == '__main__':
