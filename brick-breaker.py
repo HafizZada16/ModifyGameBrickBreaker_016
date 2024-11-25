@@ -140,7 +140,7 @@ class Game(tk.Frame):
         self.lives = 3
         self.width = 610
         self.height = 400
-        self.canvas = tk.Canvas(self, bg='#D6D1F5',
+        self.canvas = tk.Canvas(self, bg='#C9E6F0',
                                 width=self.width,
                                 height=self.height,)
         self.canvas.pack()
