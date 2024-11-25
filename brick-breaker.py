@@ -41,6 +41,17 @@ class Ball(GameObject):
     def collide(self, game_objects):
         coords = self.get_position()
         x = (coords[0] + coords[2]) * 0.5
+        hit_brick = False  # Menandai apakah bola mengenai brick
+
+        for game_object in game_objects:
+            if isinstance(game_object, Brick):
+                hit_brick = True  # Menandai bahwa bola mengenai brick
+                game_object.hit()  # Menghantam brick
+
+        if hit_brick:
+            self.direction[1] *= -1  # Membalik arah vertikal jika mengenai brick
+            return  # Keluar dari metode setelah menangani brick
+
         if len(game_objects) == 1:
             game_object = game_objects[0]
             if isinstance(game_object, Paddle):  # Pastikan hanya mempengaruhi Paddle
@@ -51,11 +62,6 @@ class Ball(GameObject):
                 normalized_offset = offset / (game_object.width / 2)  # Normalisasi offset
                 self.direction[0] = normalized_offset  # Mengubah arah horizontal
                 self.direction[1] *= -1  # Membalik arah vertikal
-
-        # Hanya mempengaruhi brick jika ada lebih dari satu objek
-        for game_object in game_objects:
-            if isinstance(game_object, Brick):
-                game_object.hit()
 
 
 class Paddle(GameObject):
