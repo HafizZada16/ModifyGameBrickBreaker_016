@@ -1,4 +1,5 @@
 import tkinter as tk
+import random
 
 
 class GameObject(object):
@@ -106,10 +107,31 @@ class Brick(GameObject):
     def hit(self):
         self.hits -= 1
         if self.hits == 0:
-            self.delete()
+            self.explode()  # Panggil efek ledakan
         else:
             self.canvas.itemconfig(self.item,
                                    fill=Brick.COLORS[self.hits])
+
+    def explode(self):
+        # Menentukan titik tengah untuk partikel
+        center_x = (self.get_position()[0] + self.get_position()[2]) / 2
+        center_y = (self.get_position()[1] + self.get_position()[3]) / 2
+
+        # Membuat partikel ledakan
+        for _ in range(30):  # Jumlah partikel
+            x_offset = random.randint(-30, 30)  # Offset acak untuk menyebar
+            y_offset = random.randint(-15, 15)
+            particle = self.canvas.create_oval(
+                center_x + x_offset - 5, 
+                center_y + y_offset - 5,
+                center_x + x_offset + 5, 
+                center_y + y_offset + 5,
+                fill='yellow', outline='orange', tags='explosion'
+            )
+            # Hapus partikel setelah 100ms
+            self.canvas.after(100, lambda p=particle: self.canvas.delete(p))  
+
+        self.delete()  # Hapus brick setelah efek ledakan
 
 
 class Game(tk.Frame):
