@@ -153,8 +153,9 @@ class Game(tk.Frame):
         # adding brick with different hit capacities - 3,2 and 1
         for x in range(5, self.width - 5, 75):
             self.add_brick(x + 37.5, 50, 3)
-            self.add_brick(x + 37.5, 70, 2)
-            self.add_brick(x + 37.5, 90, 1)
+            self.add_brick(x + 37.5, 70, 3)
+            self.add_brick(x + 37.5, 90, 2)
+            self.add_brick(x + 37.5, 110, 1)
 
         self.hud = None
         self.setup_game()
