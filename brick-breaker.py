@@ -150,7 +150,7 @@ class Game(tk.Frame):
         self.ball = None
         self.paddle = Paddle(self.canvas, self.width/2, 326)
         self.items[self.paddle.item] = self.paddle
-        # adding brick with different hit capacities - 3,2 and 1
+        # adding brick with different hit capacities - 4,3,2 and 1
         for x in range(5, self.width - 5, 75):
             self.add_brick(x + 37.5, 50, 4)
             self.add_brick(x + 37.5, 70, 3)
@@ -177,15 +177,15 @@ class Game(tk.Frame):
             self.ball.delete()
         paddle_coords = self.paddle.get_position()
         x = (paddle_coords[0] + paddle_coords[2]) * 0.5
-        self.ball = Ball(self.canvas, x, 310)
+        self.ball = Ball(self.canvas,x, 310)
         self.paddle.set_ball(self.ball)
 
     def add_brick(self, x, y, hits):
         brick = Brick(self.canvas, x, y, hits)
         self.items[brick.item] = brick
 
-    def draw_text(self, x, y, text, size='40'):
-        font = ('Forte', size)
+    def draw_text(self, x, y, text, size='30'):
+        font = ('Fixedsys', size)
         return self.canvas.create_text(x, y, text=text,
                                        font=font)
 
