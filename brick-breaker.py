@@ -25,12 +25,16 @@ class Ball(GameObject):
         self.direction = [1, -1]
         # increase the below value to increase the speed of ball
         self.speed = 10
+        self.trail = []  # Daftar untuk menyimpan ekor
         item = canvas.create_oval(x-self.radius, y-self.radius,
                                   x+self.radius, y+self.radius,
                                   fill='white')
         super(Ball, self).__init__(canvas, item)
 
     def update(self):
+        # Simpan posisi sebelumnya untuk menggambar ekor
+        prev_coords = self.get_position()
+        
         coords = self.get_position()
         width = self.canvas.winfo_width()
         if coords[0] <= 0 or coords[2] >= width:
@@ -40,6 +44,19 @@ class Ball(GameObject):
         x = self.direction[0] * self.speed
         y = self.direction[1] * self.speed
         self.move(x, y)
+
+        # Menggambar ekor dengan ukuran lebih kecil
+        trail_item = self.canvas.create_oval(
+            prev_coords[0] + self.radius - 2, prev_coords[1] + self.radius - 2,
+            prev_coords[0] + self.radius + 2, prev_coords[1] + self.radius + 2,
+            fill='white', outline='', tags='trail'
+        )
+        self.trail.append(trail_item)
+
+        # Menghapus ekor yang lebih tua
+        if len(self.trail) > 10:  # Menyimpan 10 ekor terakhir
+            old_trail = self.trail.pop(0)
+            self.canvas.delete(old_trail)
 
     def collide(self, game_objects):
         coords = self.get_position()
@@ -225,7 +242,7 @@ class Game(tk.Frame):
         num_bricks = len(self.canvas.find_withtag('brick'))
         if num_bricks == 0: 
             self.ball.speed = None
-            self.draw_text(300, 200, 'You win! You the Breaker of Bricks.')
+            self.draw_text(300, 200, 'You Win!')
         elif self.ball.get_position()[3] >= self.height: 
             self.ball.speed = None
             self.ball.canvas.itemconfig(self.ball.item, fill='red')  # Mengubah warna bola menjadi merah
