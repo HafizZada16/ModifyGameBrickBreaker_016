@@ -54,7 +54,7 @@ class Ball(GameObject):
 
         if hit_brick:
             self.direction[1] *= -1  # Membalik arah vertikal jika mengenai brick
-            self.speed += 0.1  # Menambah kecepatan bola setiap kali memantul
+            self.speed += 0.3  # Menambah kecepatan bola setiap kali memantul
             return  # Keluar dari metode setelah menangani brick
 
         if len(game_objects) == 1:
