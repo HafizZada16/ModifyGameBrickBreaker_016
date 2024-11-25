@@ -91,7 +91,7 @@ class Paddle(GameObject):
 
 
 class Brick(GameObject):
-    COLORS = {1: '#F95454', 2: '#0D92F4', 3: '#00FF9C', 4: '#117554'}
+    COLORS = {1: '#F95454', 2: '#0D92F4', 3: '#00FF9C', 4: '#117554'} # Menambah 1 step lagi diatas step 3
 
     def __init__(self, canvas, x, y, hits):
         self.width = 75
