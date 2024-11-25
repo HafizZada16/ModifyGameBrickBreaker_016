@@ -41,18 +41,18 @@ class Ball(GameObject):
     def collide(self, game_objects):
         coords = self.get_position()
         x = (coords[0] + coords[2]) * 0.5
-        if len(game_objects) > 1:
-            self.direction[1] *= -1
-        elif len(game_objects) == 1:
+        if len(game_objects) == 1:
             game_object = game_objects[0]
-            coords = game_object.get_position()
-            if x > coords[2]:
-                self.direction[0] = 1
-            elif x < coords[0]:
-                self.direction[0] = -1
-            else:
-                self.direction[1] *= -1
+            if isinstance(game_object, Paddle):  # Pastikan hanya mempengaruhi Paddle
+                coords = game_object.get_position()
+                # Menyesuaikan arah bola berdasarkan posisi mendarat pada paddle
+                paddle_center = (coords[0] + coords[2]) * 0.5
+                offset = x - paddle_center
+                normalized_offset = offset / (game_object.width / 2)  # Normalisasi offset
+                self.direction[0] = normalized_offset  # Mengubah arah horizontal
+                self.direction[1] *= -1  # Membalik arah vertikal
 
+        # Hanya mempengaruhi brick jika ada lebih dari satu objek
         for game_object in game_objects:
             if isinstance(game_object, Brick):
                 game_object.hit()
