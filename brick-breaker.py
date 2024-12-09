@@ -246,6 +246,12 @@ class Game(tk.Frame):
             self.ball.speed = None
             self.ball.canvas.itemconfig(self.ball.item, fill='red')  # Mengubah warna bola menjadi merah
             self.lives -= 1
+            
+            # Menghapus semua trail saat bola menyentuh dasar
+            for trail in self.ball.trail:
+                self.canvas.delete(trail)
+            self.ball.trail.clear()  # Mengosongkan daftar trail
+
             if self.lives < 0:
                 self.draw_text(300, 200, 'You Lose! Game Over!')
             else:
